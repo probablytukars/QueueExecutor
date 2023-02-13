@@ -35,6 +35,10 @@ queueExecutor.eval()
 - Set priority of when the queue evaluates (by default it's last)
 
 ## Documentation
+
+In the below code `...` within a function definition represents code within a function.
+
+
 - `queueExecutor.eval()`: Starts evaluation of the queue.
 
 - `queueExecutor.stop()`: Stops evaluation of the queue.
@@ -47,7 +51,9 @@ queueExecutor.eval()
 
 - `queueExecutor.setEvaluationTime(newEvaluationTime: number)`: Sets the maximum evaluation the queue can take per frame. For example, setting this to `1/30` would mean it could take up to 1/30th of a second per frame to evaluate functions on the stack. Numbers closer to zero keep the game framerate higher but evaluate less functions per frame, and numbers further from zero lower the framerate but evaluate more functions per frame.
 
-- `queueExecutor.addToQueue(insertBeginning: boolean, expression: (any) -> any, andThen: (any) -> ())`: Adds a function to to the queue. If `insertBeginning` is true, the function will be inserted at the beginning of the queue. If false, it will be inserted at the end of the queue. Once the function and all internal queued functions have completed (if any), the `andThen` function will be called. This is just like a callback in any other language.
+- `queueExecutor.addToQueue(insertBeginning: boolean, expression: (any) -> any, andThen: (any) -> ())`: Adds a function to to the queue. If `insertBeginning` is true, the function will be inserted at the beginning of the queue. If false, it will be inserted at the end of the queue. Once the function and all internal queued functions have completed (if any), the `andThen` function will be called. This is just like a callback in any other language. This may look like:
+
+	`queueExecutor.addToQueue(false, function() ... end, function() ... end)`
 
 - `queueExecutor.iterate(startIndex: number, finalIndex: number, indexOffset: number, fncExec: (number) -> (), andThen: () -> ())`: This acts just like a regular iteration for loop (e.g. `for i = 1, 10 do`). This takes in 3 numbers, a function to be executed every iteration (which has the current iteration passed into it), and a callback function for when the loop has finished. This may look like: 
 
