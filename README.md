@@ -53,11 +53,11 @@ In the below code `...` within a function definition represents code within a fu
 
 - `queueExecutor.addToQueue(insertBeginning: boolean, expression: (any) -> any, andThen: (any) -> ())`: Adds a function to to the queue. If `insertBeginning` is true, the function will be inserted at the beginning of the queue. If false, it will be inserted at the end of the queue. Once the function and all internal queued functions have completed (if any), the `andThen` function will be called. This is just like a callback in any other language. This may look like:
 
-	`queueExecutor.addToQueue(false, function() ... end, function() ... end)`
+	`queueExecutor.for(false, function() ... end, function() ... end)`
 
 - `queueExecutor.iterate(startIndex: number, finalIndex: number, indexOffset: number, fncExec: (number) -> (), andThen: () -> ())`: This acts just like a regular iteration for loop (e.g. `for i = 1, 10 do`). This takes in 3 numbers, a function to be executed every iteration (which has the current iteration passed into it), and a callback function for when the loop has finished. This may look like: 
 
-	`queueExecutor.iterate(1, 10, 1, function(i) ... end, function() ... end)`.
+	`queueExecutor.for(1, 10, 1, function(i) ... end, function() ... end)`.
 
 - `queueExecutor.pairs(tab: { [a]: b }, fncExec: (string, any) -> (), andThen: () -> ())`: This acts like a pairs for loop (e.g `for k, v in pairs(tab) do`). This takes in a table (which can be either an array, or a dictionary), a function to be executed every iteration (which has the key and value of that iteration passed into it), and a callback function when the loop has finished. This may look like: 
 
