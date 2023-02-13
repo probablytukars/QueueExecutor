@@ -70,7 +70,7 @@ queueExecutor.eval()
 	`queueExecutor.whileDo(function() ... end,  function() ... end, function() ... end)`.
 
 
-For a more thorough understanding of what the functions do and how to use them, a `docs.lua` file has been provided in this repository, showing you how you might use each of these functions.
+For a more thorough understanding of what the functions do and how to use them, a [documentation](docs.lua) file has been provided in this repository, showing you how you might use each of these functions.
 
 ## License
 
