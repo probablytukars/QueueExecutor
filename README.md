@@ -67,7 +67,7 @@ queueExecutor.eval()
 
 - `queueExecutor.doWhile(condition: (any) -> boolean, fncExec: () -> (), andThen: () -> ())`: This is like the above function, except it will always execute the internal of the loop atleast once. This may look like: 
 
-	`queueExecutor.whileDo(function() ... end,  function() ... end, function() ... end)`.
+	`queueExecutor.doWhile(function() ... end,  function() ... end, function() ... end)`.
 
 
 For a more thorough understanding of what the functions do and how to use them, a [documentation](docs.lua) file has been provided in this repository, showing you how you might use each of these functions.
