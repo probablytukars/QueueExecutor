@@ -45,7 +45,7 @@ In the below code `...` within a function definition represents code within a fu
 
 - `queueExecutor.clear()`: Clears the queue.
 
-- `queueExecutor.getSize(): number`: Returns the size of the queue
+- `queueExecutor.getSize(): number`: Returns the size of the queue.
 
 - `queueExecutor.setPriority(newPriority: number)`: Sets the priority of the queue according to the `Enum.RenderPriority` Enum.
 
