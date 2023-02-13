@@ -65,7 +65,7 @@ local function LT(a, b) return a < b end
 local function GT(a, b) return a > b end
 
 
-function queueExecutor.iterate(startIndex: number, finalIndex: number, indexOffset: number, fncExec: (number) -> (), andThen: () -> ())
+function queueExecutor.for(startIndex: number, finalIndex: number, indexOffset: number, fncExec: (number) -> (), andThen: () -> ())
 	if not indexOffset then indexOffset = (finalIndex > startIndex) and 1 or -1 end
 	if (startIndex > finalIndex and indexOffset > 0) or 
 		(startIndex < finalIndex and indexOffset < 0) then 
