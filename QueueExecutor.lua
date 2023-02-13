@@ -53,7 +53,7 @@ function queueExecutor.setEvaluationTime(newEvaluationTime: number)
 end
 
 
-function queueExecutor.addToQueue(insertBeginning: boolean, expression: (any) -> any, andThen: (any) -> any)
+function queueExecutor.addToQueue(insertBeginning: boolean, expression: (any) -> any, andThen: (any) -> ())
 	if insertBeginning then
 		table.insert(queue, 1, {expression, andThen})
 	else
@@ -65,7 +65,7 @@ local function LT(a, b) return a < b end
 local function GT(a, b) return a > b end
 
 
-function queueExecutor.iterate(startIndex: number, finalIndex: number, indexOffset: number, fncExec: (number) -> any, andThen: () -> any)
+function queueExecutor.iterate(startIndex: number, finalIndex: number, indexOffset: number, fncExec: (number) -> (), andThen: () -> ())
 	if not indexOffset then indexOffset = (finalIndex > startIndex) and 1 or -1 end
 	if (startIndex > finalIndex and indexOffset > 0) or 
 		(startIndex < finalIndex and indexOffset < 0) then 
@@ -94,7 +94,7 @@ end
 
 
 
-function queueExecutor.pairs(tab: { [a]: b }, fncExec: (any) -> any, andThen: (any) -> any)
+function queueExecutor.pairs(tab: { [a]: b }, fncExec: (string, any) -> (), andThen: () -> ())
 	local key, value = next(tab)
 	
 	local function loop(key, value)
@@ -115,7 +115,7 @@ function queueExecutor.pairs(tab: { [a]: b }, fncExec: (any) -> any, andThen: (a
 	loop(key, value)
 end
 
-function queueExecutor.ipairs(tab: { [a]: b }, fncExec: (any) -> any, andThen: (any) -> any)
+function queueExecutor.ipairs(tab: { [a]: b }, fncExec: (number, any) -> (), andThen: () -> ())
 	local key, value = next(tab)
 	local iteration = 1
 	
@@ -137,7 +137,7 @@ function queueExecutor.ipairs(tab: { [a]: b }, fncExec: (any) -> any, andThen: (
 	loop(key, value, iteration)
 end
 
-function queueExecutor.whileDo(condition: (any) -> any, fncExec: (any) -> any, andThen: (any) -> any)
+function queueExecutor.whileDo(condition: (any) -> boolean, fncExec: () -> (), andThen: () -> ())
 	local function loop()
 		if condition() then
 			queueExecutor.addToQueue(true,
@@ -153,7 +153,7 @@ function queueExecutor.whileDo(condition: (any) -> any, fncExec: (any) -> any, a
 	loop()
 end
 
-function queueExecutor.doWhile(condition: (any) -> any, fncExec: (any) -> any, andThen: (any) -> any)
+function queueExecutor.doWhile(condition: (any) -> boolean, fncExec: () -> (), andThen: () -> ())
 	local function loop()
 		queueExecutor.addToQueue(true,
 			function()
