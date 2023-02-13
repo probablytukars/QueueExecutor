@@ -35,20 +35,23 @@ runService:BindToRenderStep(bindName..".first", Enum.RenderPriority.First.Value,
 	frameStarted = tick()
 end)
 
-function queueExecutor.setPriority(newPriority)
+
+function queueExecutor.eval() paused = false end
+function queueExecutor.stop() paused = true end
+function queueExecutor.clear() queue = {} end
+function queueExecutor.getSize(): number return #queue end
+
+
+function queueExecutor.setPriority(newPriority: number)
 	priority = newPriority
 	runService:UnbindFromRenderStep(bindName..".main")
 	runService:BindToRenderStep(bindName..".main", priority, process)
 end
 
-function queueExecutor.setEvaluationTime(newEvaluationTime) 
+function queueExecutor.setEvaluationTime(newEvaluationTime: number) 
 	evaluationTime = newEvaluationTime
 end
 
-function queueExecutor.eval() paused = false end
-function queueExecutor.stop() paused = true end
-function queueExecutor.clear() queue = {} end
-function queueExecutor.getSize() return #queue end
 
 function queueExecutor.addToQueue(insertBeginning: boolean, expression: (any) -> any, andThen: (any) -> any)
 	if insertBeginning then
@@ -61,7 +64,8 @@ end
 local function LT(a, b) return a < b end
 local function GT(a, b) return a > b end
 
-function queueExecutor.iterate(startIndex, finalIndex, indexOffset, fncExec, andThen)
+
+function queueExecutor.iterate(startIndex: number, finalIndex: number, indexOffset: number, fncExec: (number) -> any, andThen: () -> any)
 	if not indexOffset then indexOffset = (finalIndex > startIndex) and 1 or -1 end
 	if (startIndex > finalIndex and indexOffset > 0) or 
 		(startIndex < finalIndex and indexOffset < 0) then 
@@ -88,8 +92,10 @@ function queueExecutor.iterate(startIndex, finalIndex, indexOffset, fncExec, and
 	loop(startIndex)
 end
 
-function queueExecutor.pairs(dictionary, fncExec, andThen)
-	local key, value = next(dictionary)
+
+
+function queueExecutor.pairs(tab: { [a]: b }, fncExec: (any) -> any, andThen: (any) -> any)
+	local key, value = next(tab)
 	
 	local function loop(key, value)
 		if key == nil then 
@@ -100,7 +106,7 @@ function queueExecutor.pairs(dictionary, fncExec, andThen)
 					fncExec(key, value)
 				end,
 				function()
-					key, value = next(dictionary, key)
+					key, value = next(tab, key)
 					loop(key, value)
 				end
 			)
@@ -109,7 +115,29 @@ function queueExecutor.pairs(dictionary, fncExec, andThen)
 	loop(key, value)
 end
 
-function queueExecutor.whileDo(condition, fncExec, andThen)
+function queueExecutor.ipairs(tab: { [a]: b }, fncExec: (any) -> any, andThen: (any) -> any)
+	local key, value = next(tab)
+	local iteration = 1
+	
+	local function loop(key, value, iteration)
+		if key == nil then 
+			andThen()
+		else
+			queueExecutor.addToQueue(true,
+				function()
+					fncExec(iteration, value)
+				end,
+				function()
+					key, value = next(tab, key)
+					loop(key, value, iteration + 1)
+				end
+			)
+		end
+	end
+	loop(key, value, iteration)
+end
+
+function queueExecutor.whileDo(condition: (any) -> any, fncExec: (any) -> any, andThen: (any) -> any)
 	local function loop()
 		if condition() then
 			queueExecutor.addToQueue(true,
@@ -125,7 +153,7 @@ function queueExecutor.whileDo(condition, fncExec, andThen)
 	loop()
 end
 
-function queueExecutor.doWhile(condition, fncExec, andThen)
+function queueExecutor.doWhile(condition: (any) -> any, fncExec: (any) -> any, andThen: (any) -> any)
 	local function loop()
 		queueExecutor.addToQueue(true,
 			function()
