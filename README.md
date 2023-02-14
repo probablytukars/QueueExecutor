@@ -47,11 +47,17 @@ In the below code `...` within a function definition represents code within a fu
 
 - `queueExecutor.clear()`: Clears the queue.
 
-- `queueExecutor.getSize(): number`: Returns the size of the queue.
-
 - `queueExecutor.setPriority(newPriority: number)`: Sets the priority of the queue according to the `Enum.RenderPriority` Enum.
 
 - `queueExecutor.setEvaluationTime(newEvaluationTime: number)`: Sets the maximum evaluation the queue can take per frame. For example, setting this to `1/30` would mean it could take up to 1/30th of a second per frame to evaluate functions on the stack. Numbers closer to zero keep the game framerate higher but evaluate less functions per frame, and numbers further from zero lower the framerate but evaluate more functions per frame.
+
+- `queueExecutor.getSize(): number`: Returns the size of the queue.
+
+- `queueExecutor.getStatus(): boolean`: Gets the status of the queue, set by `.eval()` and `.stop()`.
+
+- `queueExecutor.getEvaluationTime(): number`: Gets the evaluation time, set by `.setEvaluationTime()`, or the default value of 1/60.
+
+- `queueExecutor.getPriority(): number`: Gets the priority of the queue, set by `.setPriority()`, or the default value of `Enum.RenderPriority.Last.Value`.
 
 - `queueExecutor.addToQueue(insertBeginning: boolean, expression: (any) -> any, andThen: (any) -> ())`: Adds a function to to the queue. If `insertBeginning` is true, the function will be inserted at the beginning of the queue. If false, it will be inserted at the end of the queue. Once the function and all internal queued functions have completed (if any), the `andThen` function will be called. This is just like a callback in any other language. This may look like:
 
