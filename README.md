@@ -53,7 +53,7 @@ In the below code `...` within a function definition represents code within a fu
 
 - `queueExecutor.getSize(): number`: Returns the size of the queue.
 
-- `queueExecutor.getStatus(): boolean`: Gets the status of the queue, set by `.eval()` and `.stop()`.
+- `queueExecutor.isPaused(): boolean`: Gets where the queue is paused of not, set by `.eval()` and `.stop()`.
 
 - `queueExecutor.getEvaluationTime(): number`: Gets the evaluation time, set by `.setEvaluationTime()`, or the default value of 1/60.
 
