@@ -51,7 +51,7 @@ function queueExecutor.setEvaluationTime(newEvaluationTime: number)
 end
 
 function queueExecutor.getSize(): number return #queue end
-function queueExecutor.getStatus(): boolean return paused end
+function queueExecutor.isPaused(): boolean return paused end
 function queueExecutor.getEvaluationTime(): number return evaluationTime end
 function queueExecutor.getPriority(): number return priority end
 
