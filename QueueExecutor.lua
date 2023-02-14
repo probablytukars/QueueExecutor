@@ -55,6 +55,7 @@ function queueExecutor.isPaused(): boolean return paused end
 function queueExecutor.getEvaluationTime(): number return evaluationTime end
 function queueExecutor.getPriority(): number return priority end
 
+
 function queueExecutor.addToQueue(insertBeginning: boolean, expression: (any) -> any, andThen: (any) -> ())
 	if insertBeginning then
 		table.insert(queue, 1, {expression, andThen})
@@ -65,7 +66,6 @@ end
 
 local function LT(a, b) return a < b end
 local function GT(a, b) return a > b end
-
 
 function queueExecutor.fori(startIndex: number, finalIndex: number, indexOffset: number, fncExec: (number) -> (), andThen: () -> ())
 	if not indexOffset then indexOffset = (finalIndex > startIndex) and 1 or -1 end
@@ -79,7 +79,7 @@ function queueExecutor.fori(startIndex: number, finalIndex: number, indexOffset:
 	
 	local function loop(currentIndex)
 		if comparison(currentIndex, finalIndex) then 
-			andThen()
+			if andThen then andThen() end
 		else
 			queueExecutor.addToQueue(true,
 				function()
@@ -101,7 +101,7 @@ function queueExecutor.pairs(tab: { [a]: b }, fncExec: (string, any) -> (), andT
 	
 	local function loop(key, value)
 		if key == nil then 
-			andThen()
+			if andThen then andThen() end
 		else
 			queueExecutor.addToQueue(true,
 				function()
@@ -123,7 +123,7 @@ function queueExecutor.ipairs(tab: { [a]: b }, fncExec: (number, any) -> (), and
 	
 	local function loop(key, value, iteration)
 		if key == nil then 
-			andThen()
+			if andThen then andThen() end
 		else
 			queueExecutor.addToQueue(true,
 				function()
@@ -149,7 +149,7 @@ function queueExecutor.whileDo(condition: (any) -> boolean, fncExec: () -> (), a
 				loop
 			)
 		else
-			andThen()
+			if andThen then andThen() end
 		end
 	end
 	loop()
@@ -165,7 +165,7 @@ function queueExecutor.doWhile(condition: (any) -> boolean, fncExec: () -> (), a
 				if condition() then
 					loop()
 				else
-					andThen()
+					if andThen then andThen() end
 				end
 			end
 		)
@@ -175,4 +175,3 @@ end
 
 
 return queueExecutor
-
