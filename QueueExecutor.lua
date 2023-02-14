@@ -40,6 +40,9 @@ function queueExecutor.eval() paused = false end
 function queueExecutor.stop() paused = true end
 function queueExecutor.clear() queue = {} end
 function queueExecutor.getSize(): number return #queue end
+function queueExecutor.getStatus(): boolean return paused end
+function queueExecutor.getEvaluationTime(): number return evaluationTime end
+function queueExecutor.getPriority(): number return priority end
 
 
 function queueExecutor.setPriority(newPriority: number)
