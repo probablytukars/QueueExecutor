@@ -15,15 +15,14 @@ local function process(s)
 		local startExecution = tick()
 		local spentTime = startExecution - frameStarted
 		while tick() - startExecution < (evaluationTime - spentTime) and #queue > 0 do
-			local first = queue[1]
+			local first = queue[#queue]
 			local fnexec, andThen = first[1], first[2]
-			table.remove(queue, 1)
+			table.remove(queue)
 			local beforeSize = #queue
 			local lastReturn = {fnexec()}
 			if andThen then
 				local insertInto = function() andThen(unpack(lastReturn)) end
-				local difference = #queue - beforeSize
-				table.insert(queue, difference + 1, {insertInto, nil})
+				table.insert(queue, beforeSize, {insertInto, nil})
 			end
 		end
 	end
@@ -58,9 +57,9 @@ function queueExecutor.getPriority(): number return priority end
 
 function queueExecutor.addToQueue(insertBeginning: boolean, expression: (any) -> any, andThen: (any) -> ())
 	if insertBeginning then
-		table.insert(queue, 1, {expression, andThen})
-	else
 		table.insert(queue, {expression, andThen})
+	else
+		table.insert(queue, 1, {expression, andThen})
 	end
 end
 
