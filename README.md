@@ -83,6 +83,20 @@ In the below code `...` within a function definition represents code within a fu
 	`queueExecutor.doWhile(function() ... end,  function() ... end, function() ... end)`.
 
 
+To do the equivalent of `break` inside of `fori`, `pairs`, and `ipairs`, use `return true` inside of the main loop function.
+
+e.g:
+
+```lua
+queueExecutor.pairs(table, function(k, v)
+	if k == "" then
+		return true --equiv to break
+	end
+end, function()
+	print("broken early")
+end)
+```
+
 For a more thorough understanding of what the functions do and how to use them, a [documentation](docs.lua) file has been provided in this repository, showing you how you might use each of these functions.
 
 ## License
