@@ -22,7 +22,7 @@ local function process(s)
 			local lastReturn = {fnexec()}
 			if andThen then
 				local insertInto = function() andThen(unpack(lastReturn)) end
-				table.insert(queue, beforeSize, {insertInto, nil})
+				table.insert(queue, beforeSize + 1, {insertInto, nil})
 			end
 		end
 	end
