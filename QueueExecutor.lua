@@ -85,8 +85,12 @@ function queueExecutor.fori(startIndex: number, finalIndex: number, indexOffset:
 				function()
 					fncExec(currentIndex)
 				end,
-				function()
-					loop(currentIndex + indexOffset)
+				function(broke)
+					if broke == false then
+						andThen()
+					else
+						loop(currentIndex + indexOffset)
+					end
 				end
 			)
 		end
@@ -107,9 +111,13 @@ function queueExecutor.pairs(tab: { [a]: b }, fncExec: (string, any) -> (), andT
 				function()
 					fncExec(key, value)
 				end,
-				function()
-					key, value = next(tab, key)
-					loop(key, value)
+				function(broke)
+					if broke == false then
+						andThen()
+					else
+						key, value = next(tab, key)
+						loop(key, value)
+					end
 				end
 			)
 		end
@@ -129,9 +137,13 @@ function queueExecutor.ipairs(tab: { [a]: b }, fncExec: (number, any) -> (), and
 				function()
 					fncExec(iteration, value)
 				end,
-				function()
-					key, value = next(tab, key)
-					loop(key, value, iteration + 1)
+				function(broke)
+					if broke == false then
+						andThen()
+					else
+						key, value = next(tab, key)
+						loop(key, value, iteration + 1)
+					end
 				end
 			)
 		end
