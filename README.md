@@ -1,6 +1,6 @@
 # Roblox Queue Executor
 
-A Roblox library for asynchronously executing functions as a Queue. The intention of this library is to make it easy to run functions that may otherwise crash Studio or your game, by executing the functions over many frames.
+A Roblox library for synchronously asynchronously(?) executing functions as a Queue. The intention of this library is to make it easy to run functions that may otherwise crash Studio or your game, by executing the functions over many frames.
 These will obviously be slower to evaluate than built-in implementations of control structures, so use this only where necessary, however this is still relatively fast.
 
 ## Example Usage
